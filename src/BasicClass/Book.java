@@ -1,6 +1,9 @@
 package BasicClass;
 
 public class Book {
+    public static final int BOOD_ID_LENGTH = 6;
+    public static final int SELLER_LENGTH = 10;
+
     private String bookName;
     private String bookId;
     private float bookPrice;

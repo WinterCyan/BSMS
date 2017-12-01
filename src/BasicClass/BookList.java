@@ -104,7 +104,10 @@ public class BookList extends ArrayList<Book>{
             int nowNum = resultSet.getInt("NUM");
             String sql = "UPDATE BOOKS SET NUM = NUM - " + saleNum + ";";
             if(nowNum >= saleNum) statement.execute(sql);
-            else return false;
+            else {
+                System.out.println("INVENTORY SHORTAGE");
+                return false;
+            }
         } catch (SQLException se){
             se.printStackTrace();
         } catch (Exception e){

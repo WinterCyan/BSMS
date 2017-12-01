@@ -18,7 +18,8 @@ import javafx.stage.Stage;
 public class BooksSalesFrame extends Application{
     private SaleList saleList;
     private BookList bookList;
-    private int ordNum = 1;
+    private int INIT_ORD = 1;
+    private int ordNum = INIT_ORD;
     private ObservableList<SaleRecord> records;
     public static void main(String[] args){
         launch(args);
@@ -29,7 +30,7 @@ public class BooksSalesFrame extends Application{
         saleList = new SaleList();
         bookList = new BookList();
 
-        Button stockBtn = new Button("STOCK");
+        Button stockBtn = new Button("INVENTORY");
         Button figureBtn = new Button("FIGURE");
         Button saveBtn = new Button("SAVE & EXIT");
         stockBtn.setFont(new Font(15));
@@ -110,10 +111,12 @@ public class BooksSalesFrame extends Application{
         primaryStage.show();
 
         submitBtn.setOnAction(event -> {
-            // set conditions:
-            if(!(id.getText().isEmpty()) &&
+            // set conditions:!(id.getText().isEmpty()) &&
+            //                    !(num.getText().isEmpty()) &&
+            //                    !(id.getText().isEmpty())
+            if((id.getText().length() == Book.BOOD_ID_LENGTH) &&
                     !(num.getText().isEmpty()) &&
-                    !(id.getText().isEmpty())){
+                    (seller.getText().length() <= Book.SELLER_LENGTH)){
                 for (Book book : bookList){
                     if (book.getBookId().equals(id.getText())){
                         int saleNum = Integer.parseInt(num.getText());
@@ -121,6 +124,7 @@ public class BooksSalesFrame extends Application{
                         String sellerName = seller.getText();
                         if(bookList.updateBook(book.getBookId(), -1, saleNum)){
                             Sale sale = new Sale(bookId, sellerName, saleNum);
+                            // submit to db:
                             saleList.addSale(bookId, sellerName, saleNum);
                             // submit to table:
                             records.add(new SaleRecord(book, sale, ordNum++));
@@ -130,7 +134,7 @@ public class BooksSalesFrame extends Application{
                     }
                 }
             }else{
-                System.out.println("NO BLANK!");
+                System.out.println("WRONG NUM OR SELLER");
             }
             // seller and num(mostly 1) stays:
             id.clear();
