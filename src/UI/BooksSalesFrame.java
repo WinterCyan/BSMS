@@ -137,7 +137,7 @@ public class BooksSalesFrame extends Application{
                 System.out.println("WRONG NUM OR SELLER");
             }
             // seller and num(mostly 1) stays:
-            id.clear();
+            //id.clear();
         });
 
         clearBtn.setOnAction(event -> {

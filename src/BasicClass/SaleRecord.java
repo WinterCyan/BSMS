@@ -32,14 +32,6 @@ public class SaleRecord {
         return sale;
     }
 
-//    public String getId() {
-//        return id.get();
-//    }
-//
-//    public SimpleStringProperty idProperty() {
-//        return id;
-//    }
-
     public String getName() {
         return name.get();
     }
