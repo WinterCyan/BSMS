@@ -19,12 +19,13 @@ public class BooksSalesFrame extends Application{
     private SaleList saleList;
     private BookList bookList;
     private int ordNum = 1;
+    private ObservableList<SaleRecord> records;
     public static void main(String[] args){
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
         saleList = new SaleList();
         bookList = new BookList();
 
@@ -47,21 +48,23 @@ public class BooksSalesFrame extends Application{
 
         TableView table = new TableView();
         table.setEditable(false);
-        TableColumn saleOrdColumn = new TableColumn("Sale ID");
-        TableColumn saleIdColumn = new TableColumn("Book ID");
+        records = FXCollections.observableArrayList();
+        table.setItems(records);
+        TableColumn saleOrdColumn = new TableColumn("Sale Order");
+//        TableColumn saleIdColumn = new TableColumn("Sale ID");
         TableColumn bookNameColumn = new TableColumn("Book Name");
         TableColumn sellerNameColumn = new TableColumn("Seller");
         TableColumn bookNumColumn = new TableColumn("Number");
         TableColumn bookPriceColumn = new TableColumn("Price");
         TableColumn totalPriceColumn = new TableColumn("Total");
         saleOrdColumn.setCellValueFactory(new PropertyValueFactory<>("ord"));
-        saleIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        saleIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         bookNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         sellerNameColumn.setCellValueFactory(new PropertyValueFactory<>("seller"));
         bookNumColumn.setCellValueFactory(new PropertyValueFactory<>("num"));
         bookPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         totalPriceColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
-        table.getColumns().addAll(saleOrdColumn, saleIdColumn, bookNameColumn, sellerNameColumn,
+        table.getColumns().addAll(saleOrdColumn, bookNameColumn, sellerNameColumn,
                 bookNumColumn, bookPriceColumn, totalPriceColumn);
         Label label = new Label("Sale Record:");
         label.setPadding(new Insets(0,0,0,20));
@@ -120,9 +123,7 @@ public class BooksSalesFrame extends Application{
                             Sale sale = new Sale(bookId, sellerName, saleNum);
                             saleList.addSale(bookId, sellerName, saleNum);
                             // submit to table:
-                            ObservableList<SaleRecord> records =
-                                    FXCollections.observableArrayList(new SaleRecord(book, sale, ordNum++));
-                            table.setItems(records);
+                            records.add(new SaleRecord(book, sale, ordNum++));
                         }
                     }else{
                         System.out.println("WRONG BOOK ID");

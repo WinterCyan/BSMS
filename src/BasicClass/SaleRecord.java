@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class SaleRecord {
     private Book book;
     private Sale sale;
-    private SimpleStringProperty id, name, seller;
+    private SimpleStringProperty name, seller;
     private SimpleIntegerProperty ord, num;
     private SimpleFloatProperty price, total;
 
@@ -16,7 +16,7 @@ public class SaleRecord {
         this.book = book;
 
         this.ord = new SimpleIntegerProperty(ordNum);
-        this.id = new SimpleStringProperty(sale.getSaleId());
+//        this.id = new SimpleStringProperty(sale.getSaleId());
         this.name = new SimpleStringProperty(book.getBookName());
         this.seller = new SimpleStringProperty(sale.getSeller());
         this.num = new SimpleIntegerProperty(sale.getSaleNum());
@@ -32,13 +32,13 @@ public class SaleRecord {
         return sale;
     }
 
-    public String getId() {
-        return id.get();
-    }
-
-    public SimpleStringProperty idProperty() {
-        return id;
-    }
+//    public String getId() {
+//        return id.get();
+//    }
+//
+//    public SimpleStringProperty idProperty() {
+//        return id;
+//    }
 
     public String getName() {
         return name.get();
