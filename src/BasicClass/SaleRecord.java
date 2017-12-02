@@ -16,7 +16,6 @@ public class SaleRecord {
         this.book = book;
 
         this.ord = new SimpleIntegerProperty(ordNum);
-//        this.id = new SimpleStringProperty(sale.getSaleId());
         this.name = new SimpleStringProperty(book.getBookName());
         this.seller = new SimpleStringProperty(sale.getSeller());
         this.num = new SimpleIntegerProperty(sale.getSaleNum());

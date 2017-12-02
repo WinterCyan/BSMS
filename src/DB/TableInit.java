@@ -8,7 +8,7 @@ public class TableInit {
     static final String USER = "root";
     static final String PASS = "winter";
 
-    public static void main(String[] args){
+    public TableInit(){
         Connection connection = null;
         Statement statement = null;
         try {
@@ -46,6 +46,5 @@ public class TableInit {
                 se.printStackTrace();
             }
         }
-        System.out.println("Bye!");
     }
 }

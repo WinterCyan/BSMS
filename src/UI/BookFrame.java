@@ -1,7 +1,6 @@
 package UI;
 
 import BasicClass.BookInventory;
-import BasicClass.BookList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,10 +27,6 @@ public class BookFrame extends Application{
     private Statement statement;
     private ObservableList<BookInventory> inventories;
 
-    public static void main(String[] args){
-        launch(args);
-    }
-
     @Override
     public void start(Stage primaryStage){
         TableView table = new TableView();
@@ -49,15 +44,14 @@ public class BookFrame extends Application{
         Button okBtn = new Button("OK");
         okBtn.setFont(new Font(15));
         okBtn.setPadding(new Insets(5,10,5,10));
-        okBtn.setOnAction(event -> {
-            primaryStage.close();
-        });
+        okBtn.setOnAction(event -> primaryStage.close());
 
         Button addBtn = new Button("ADD BOOK");
         addBtn.setFont(new Font(15));
         addBtn.setPadding(new Insets(5,10,5,10));
         addBtn.setOnAction(event -> {
-
+            new AddBookFrame().start(new Stage());
+            primaryStage.close();
         });
 
         HBox hBox = new HBox();

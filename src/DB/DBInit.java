@@ -8,7 +8,7 @@ public class DBInit {
     static final String USER = "root";
     static final String PASS = "winter";
 
-    public static void main(String[] args){
+    public DBInit(){
         Connection connection = null;
         Statement statement = null;
         try {
@@ -48,6 +48,5 @@ public class DBInit {
                 se.printStackTrace();
             }
         }
-        System.out.println("Bye!");
     }
 }

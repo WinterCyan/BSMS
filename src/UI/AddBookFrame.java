@@ -17,10 +17,6 @@ import javafx.stage.Stage;
  public class AddBookFrame extends Application{
     private BookList bookList;
 
-    public static void main(String[] args){
-        launch(args);
-    }
-
     @Override
     public void start(Stage primaryStage){
         Text addId = new Text("Book ID: ");
@@ -49,9 +45,14 @@ import javafx.stage.Stage;
                 if(bookList.addBook(id, name, price, num)) System.out.println("New books added.");
                 else System.out.println("Updated existed books.");
             }else System.out.println("NO BLANK!");
+
+            addIdField.clear();
+            addNameField.clear();
+            addPriceField.clear();
+            addNumField.clear();
         });
 
-        Button cancelBtn = new Button("CANCEL");
+        Button cancelBtn = new Button("EXIT");
         cancelBtn.setFont(new Font(15));
         cancelBtn.setOnAction(event -> {
             addIdField.clear();
@@ -59,6 +60,7 @@ import javafx.stage.Stage;
             addPriceField.clear();
             addNumField.clear();
 
+            new BookFrame().start(new Stage());
             primaryStage.close();
         });
 

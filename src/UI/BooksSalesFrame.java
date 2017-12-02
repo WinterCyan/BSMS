@@ -1,6 +1,8 @@
 package UI;
 
 import BasicClass.*;
+import DB.DBInit;
+import DB.TableInit;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,23 +29,29 @@ public class BooksSalesFrame extends Application{
 
     @Override
     public void start(Stage primaryStage){
+        new DBInit();
+        new TableInit();
+
         saleList = new SaleList();
         bookList = new BookList();
 
-        Button stockBtn = new Button("INVENTORY");
+        Button inventoryBtn = new Button("INVENTORY");
         Button figureBtn = new Button("FIGURE");
-        Button saveBtn = new Button("SAVE & EXIT");
-        stockBtn.setFont(new Font(15));
+        Button saveBtn = new Button("EXIT");
+        inventoryBtn.setFont(new Font(15));
         figureBtn.setFont(new Font(15));
         saveBtn.setFont(new Font(15));
+        inventoryBtn.setOnAction(event -> new BookFrame().start(new Stage()));
+//        figureBtn.setOnAction(event -> );
+        saveBtn.setOnAction(event -> primaryStage.close());
 
         FlowPane menuPane = new FlowPane();
         menuPane.setPadding(new Insets(20,0,0,0));
         menuPane.setAlignment(Pos.TOP_CENTER);
         ObservableList listLeft = menuPane.getChildren();
-        listLeft.addAll(stockBtn, figureBtn, saveBtn);
+        listLeft.addAll(inventoryBtn, figureBtn, saveBtn);
         menuPane.setOrientation(Orientation.HORIZONTAL);
-        menuPane.setMargin(stockBtn, new Insets(5,10,5,5));
+        menuPane.setMargin(inventoryBtn, new Insets(5,10,5,5));
         menuPane.setMargin(figureBtn, new Insets(5,10,5,5));
         menuPane.setMargin(saveBtn, new Insets(5,10,5,5));
 
@@ -52,14 +60,12 @@ public class BooksSalesFrame extends Application{
         records = FXCollections.observableArrayList();
         table.setItems(records);
         TableColumn saleOrdColumn = new TableColumn("Sale Order");
-//        TableColumn saleIdColumn = new TableColumn("Sale ID");
         TableColumn bookNameColumn = new TableColumn("Book Name");
         TableColumn sellerNameColumn = new TableColumn("Seller");
         TableColumn bookNumColumn = new TableColumn("Number");
         TableColumn bookPriceColumn = new TableColumn("Price");
         TableColumn totalPriceColumn = new TableColumn("Total");
         saleOrdColumn.setCellValueFactory(new PropertyValueFactory<>("ord"));
-//        saleIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         bookNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         sellerNameColumn.setCellValueFactory(new PropertyValueFactory<>("seller"));
         bookNumColumn.setCellValueFactory(new PropertyValueFactory<>("num"));
@@ -111,33 +117,28 @@ public class BooksSalesFrame extends Application{
         primaryStage.show();
 
         submitBtn.setOnAction(event -> {
-            // set conditions:!(id.getText().isEmpty()) &&
-            //                    !(num.getText().isEmpty()) &&
-            //                    !(id.getText().isEmpty())
             if((id.getText().length() == Book.BOOD_ID_LENGTH) &&
                     !(num.getText().isEmpty()) &&
                     (seller.getText().length() <= Book.SELLER_LENGTH)){
-                for (Book book : bookList){
-                    if (book.getBookId().equals(id.getText())){
-                        int saleNum = Integer.parseInt(num.getText());
-                        String bookId = id.getText();
-                        String sellerName = seller.getText();
-                        if(bookList.updateBook(book.getBookId(), -1, saleNum)){
-                            Sale sale = new Sale(bookId, sellerName, saleNum);
-                            // submit to db:
-                            saleList.addSale(bookId, sellerName, saleNum);
-                            // submit to table:
-                            records.add(new SaleRecord(book, sale, ordNum++));
-                        }
-                    }else{
-                        System.out.println("WRONG BOOK ID");
+                if(!bookList.isEmpty()){
+                    for (Book book : bookList){
+                        if (book.getBookId().equals(id.getText())){
+                            int saleNum = Integer.parseInt(num.getText());
+                            String bookId = id.getText();
+                            String sellerName = seller.getText();
+                            if(bookList.updateBook(book.getBookId(), -1, saleNum)){
+                                Sale sale = new Sale(bookId, sellerName, saleNum);
+                                // submit to db:
+                                saleList.addSale(bookId, sellerName, saleNum);
+                                // submit to table:
+                                records.add(new SaleRecord(book, sale, ordNum++));
+                            }
+                        }else System.out.println("WRONG BOOK ID");
                     }
-                }
-            }else{
-                System.out.println("WRONG NUM OR SELLER");
-            }
+                }else System.out.println("NO BOOK");
+            }else System.out.println("WRONG INPUT");
             // seller and num(mostly 1) stays:
-            //id.clear();
+            id.clear();
         });
 
         clearBtn.setOnAction(event -> {
