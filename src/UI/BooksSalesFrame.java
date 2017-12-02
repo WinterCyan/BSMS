@@ -105,7 +105,7 @@ public class BooksSalesFrame extends Application{
         vBox.setVgrow(salePane, Priority.ALWAYS);
         Scene scene = new Scene(vBox,800,550);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("FlowPane");
+        primaryStage.setTitle("Sale Window");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

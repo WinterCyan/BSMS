@@ -57,11 +57,22 @@ public class BookList extends ArrayList<Book>{
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
             statement = connection.createStatement();
+            String queryBookSQL = "SELECT ID FROM BOOKS;";
+            ResultSet resultSet = statement.executeQuery(queryBookSQL);
+            while(resultSet.next()){
+                if(resultSet.getString("ID").equals(bookId)){
+                    String addExistedBookSQL = "UPDATE BOOKS SET NUM = NUM + " + newNum + ";";
+                    statement.executeUpdate(addExistedBookSQL);
+                    return false;
+                }
+            }
+
             String sql = "INSERT INTO BOOKS VALUES( '" + bookId + "'," +
                     "'" + bookName + "'," +
                     "'" + bookPrice + "'," +
                     newNum + ");";
             statement.execute(sql);
+            return true;
         } catch (SQLException se){
             se.printStackTrace();
         } catch (Exception e){
@@ -82,7 +93,7 @@ public class BookList extends ArrayList<Book>{
         // change the list:
         for(Book book : this)
             if(book.getBookId().equals(bookId)){
-                updateBook(bookId, bookPrice, newNum + book.getBookNum());
+                book.setBookNum(book.getBookNum() + newNum);
                 return false;
             }
         Book book = new Book(bookId, bookName, bookPrice, newNum);
