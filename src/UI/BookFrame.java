@@ -11,9 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.sql.*;
@@ -29,8 +31,15 @@ public class BookFrame extends Application{
 
     @Override
     public void start(Stage primaryStage){
+        Image image = new Image("cube.jpg");
+        BackgroundSize size = new BackgroundSize
+                (BackgroundSize.AUTO,BackgroundSize.AUTO,false,false, true,true);
+        BackgroundImage backgroundImage = new BackgroundImage
+                (image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
+        Background bkg = new Background(backgroundImage);
         TableView table = new TableView();
         table.setEditable(false);
+        table.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         inventories = FXCollections.observableArrayList();
         table.setItems(inventories);
         TableColumn bookIdColumn = new TableColumn("Book ID");
@@ -42,7 +51,7 @@ public class BookFrame extends Application{
         table.getColumns().addAll(bookIdColumn, bookNameColumn, inventoryColumn);
 
         Button okBtn = new Button("OK");
-        okBtn.setFont(new Font(15));
+        okBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
         okBtn.setPadding(new Insets(5,10,5,10));
         okBtn.setOnAction(event -> {
             new BooksSalesFrame().start(new Stage());
@@ -50,7 +59,7 @@ public class BookFrame extends Application{
         });
 
         Button addBtn = new Button("ADD BOOK");
-        addBtn.setFont(new Font(15));
+        addBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
         addBtn.setPadding(new Insets(5,10,5,10));
         addBtn.setOnAction(event -> {
             new AddBookFrame().start(new Stage());
@@ -62,7 +71,10 @@ public class BookFrame extends Application{
         hBox.setAlignment(Pos.CENTER);
         hBox.setMargin(okBtn, new Insets(10,10,10,30));
         hBox.setMargin(addBtn, new Insets(10,30,10,10));
+
+
         VBox vBox = new VBox();
+        vBox.setBackground(bkg);
         vBox.getChildren().addAll(table, hBox);
         vBox.setMargin(table, new Insets(10,15,5,15));
 

@@ -12,8 +12,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -23,12 +26,16 @@ public class BooksSalesFrame extends Application{
     private int INIT_ORD = 1;
     private int ordNum = INIT_ORD;
     private ObservableList<SaleRecord> records;
-    public static void main(String[] args){
-        launch(args);
-    }
 
     @Override
     public void start(Stage primaryStage){
+        Image image = new Image("cube.jpg");
+        BackgroundSize size = new BackgroundSize
+                (BackgroundSize.AUTO,BackgroundSize.AUTO,false,false, true,true);
+        BackgroundImage backgroundImage = new BackgroundImage
+                (image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
+        Background bkg = new Background(backgroundImage);
+
         new DBInit();
         new TableInit();
 
@@ -38,9 +45,9 @@ public class BooksSalesFrame extends Application{
         Button inventoryBtn = new Button("INVENTORY");
         Button figureBtn = new Button("FIGURE");
         Button saveBtn = new Button("EXIT");
-        inventoryBtn.setFont(new Font(15));
-        figureBtn.setFont(new Font(15));
-        saveBtn.setFont(new Font(15));
+        inventoryBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
+        figureBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
+        saveBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
         inventoryBtn.setOnAction(event -> {
             new BookFrame().start(new Stage());
             primaryStage.close();
@@ -61,6 +68,7 @@ public class BooksSalesFrame extends Application{
 
         TableView table = new TableView();
         table.setEditable(false);
+        table.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         records = FXCollections.observableArrayList();
         table.setItems(records);
         TableColumn saleOrdColumn = new TableColumn("Sale Order");
@@ -79,7 +87,8 @@ public class BooksSalesFrame extends Application{
                 bookNumColumn, bookPriceColumn, totalPriceColumn);
         Label label = new Label("Sale Record:");
         label.setPadding(new Insets(0,0,0,20));
-        label.setFont(new Font("Arial", 20));
+        label.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        label.setTextFill(Color.WHITE);
         VBox chartBox = new VBox();
         chartBox.setPadding(new Insets(30,0,0,0));
         chartBox.setMargin(table, new Insets(0,20,20,20));
@@ -89,10 +98,18 @@ public class BooksSalesFrame extends Application{
         TextField id = new TextField();
         TextField seller = new TextField();
         Text num_text = new Text("NUMBER: ");
+        num_text.setFont(Font.font(null, FontWeight.BOLD, 15));
+        num_text.setFill(Color.WHITE);
         Text id_text = new Text("ID: ");
+        id_text.setFont(Font.font(null, FontWeight.BOLD, 15));
+        id_text.setFill(Color.WHITE);
         Text seller_text = new Text("SELLER: ");
+        seller_text.setFont(Font.font(null, FontWeight.BOLD, 15));
+        seller_text.setFill(Color.WHITE);
         Button submitBtn = new Button("SUBMIT");
+        submitBtn.setFont(Font.font(null, FontWeight.BOLD, 13));
         Button clearBtn = new Button("CLEAR");
+        clearBtn.setFont(Font.font(null, FontWeight.BOLD, 13));
 
         GridPane salePane = new GridPane();
         salePane.setHgap(10);
@@ -101,10 +118,10 @@ public class BooksSalesFrame extends Application{
         salePane.setMargin(submitBtn, new Insets(0,0,0,30));
         salePane.setMargin(clearBtn, new Insets(0,0,0,30));
         salePane.setAlignment(Pos.BOTTOM_CENTER);
-        salePane.add(num_text,0,0);
-        salePane.add(num, 1,0);
-        salePane.add(id_text, 0,1);
-        salePane.add(id, 1,1);
+        salePane.add(id_text,0,0);
+        salePane.add(id, 1,0);
+        salePane.add(num_text, 0,1);
+        salePane.add(num, 1,1);
         salePane.add(seller_text, 0,2);
         salePane.add(seller, 1,2);
         salePane.add(submitBtn, 3,0);
@@ -112,7 +129,7 @@ public class BooksSalesFrame extends Application{
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(menuPane, chartBox, salePane);
-        vBox.setVgrow(salePane, Priority.ALWAYS);
+        vBox.setBackground(bkg);
         Scene scene = new Scene(vBox,800,550);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Sale Window");
@@ -137,7 +154,7 @@ public class BooksSalesFrame extends Application{
                                 // submit to table:
                                 records.add(new SaleRecord(book, sale, ordNum++));
                             }
-                        }else System.out.println("WRONG BOOK ID");
+                        }
                     }
                 }else System.out.println("NO BOOK");
             }else System.out.println("WRONG INPUT");

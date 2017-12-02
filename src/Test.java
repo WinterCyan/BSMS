@@ -1,5 +1,14 @@
-public class Test {
-    public static void main(String[] args){
+import UI.BooksSalesFrame;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
+public class Test extends Application{
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        new BooksSalesFrame().start(new Stage());
     }
 }

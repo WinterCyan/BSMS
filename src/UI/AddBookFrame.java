@@ -8,10 +8,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -20,17 +21,32 @@ public class AddBookFrame extends Application{
 
     @Override
     public void start(Stage primaryStage){
+        Image image = new Image("cube.jpg");
+        BackgroundSize size = new BackgroundSize
+                (BackgroundSize.AUTO,BackgroundSize.AUTO,false,false, true,true);
+        BackgroundImage backgroundImage = new BackgroundImage
+                (image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
+        Background bkg = new Background(backgroundImage);
+
         Text addId = new Text("Book ID: ");
+        addId.setFill(Color.WHITE);
+        addId.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField addIdField = new TextField();
         Text addName = new Text("Book Name: ");
+        addName.setFill(Color.WHITE);
+        addName.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField addNameField = new TextField();
         Text addPrice = new Text("Book Price: ");
+        addPrice.setFill(Color.WHITE);
+        addPrice.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField addPriceField = new TextField();
         Text addNum = new Text("Number: ");
+        addNum.setFill(Color.WHITE);
+        addNum.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField addNumField = new TextField();
 
         Button addBtn = new Button("ADD");
-        addBtn.setFont(new Font(15));
+        addBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
         addBtn.setOnAction(event -> {
             bookList = new BookList();
 
@@ -54,7 +70,7 @@ public class AddBookFrame extends Application{
         });
 
         Button cancelBtn = new Button("EXIT");
-        cancelBtn.setFont(new Font(15));
+        cancelBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
         cancelBtn.setOnAction(event -> {
             addIdField.clear();
             addNameField.clear();
@@ -83,7 +99,9 @@ public class AddBookFrame extends Application{
         hBox.setMargin(cancelBtn, new Insets(10,20,15,0));
         hBox.setMargin(addBtn, new Insets(10,0,15,20));
 
+
         VBox vBox = new VBox();
+        vBox.setBackground(bkg);
         vBox.getChildren().addAll(gridPane, hBox);
         vBox.setMargin(gridPane, new Insets(20,0,0,0));
         vBox.setMargin(hBox, new Insets(20,0,0,0));
