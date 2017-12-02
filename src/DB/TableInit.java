@@ -29,7 +29,6 @@ public class TableInit {
             statement.executeUpdate(createBooksSQL);
             statement.executeUpdate(createSalesSQL);
             statement.executeUpdate(setINCSQL);
-            System.out.println("create tables successfully.");
         } catch (SQLException se){
             se.printStackTrace();
         } catch (Exception e){

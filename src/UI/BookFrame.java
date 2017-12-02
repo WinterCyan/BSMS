@@ -44,7 +44,10 @@ public class BookFrame extends Application{
         Button okBtn = new Button("OK");
         okBtn.setFont(new Font(15));
         okBtn.setPadding(new Insets(5,10,5,10));
-        okBtn.setOnAction(event -> primaryStage.close());
+        okBtn.setOnAction(event -> {
+            new BooksSalesFrame().start(new Stage());
+            primaryStage.close();
+        });
 
         Button addBtn = new Button("ADD BOOK");
         addBtn.setFont(new Font(15));

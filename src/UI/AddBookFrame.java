@@ -1,5 +1,6 @@
 package UI;
 
+import BasicClass.Book;
 import BasicClass.BookList;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -14,7 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
- public class AddBookFrame extends Application{
+public class AddBookFrame extends Application{
     private BookList bookList;
 
     @Override
@@ -33,10 +34,10 @@ import javafx.stage.Stage;
         addBtn.setOnAction(event -> {
             bookList = new BookList();
 
-            if(!addIdField.getText().isEmpty() &&
+            if(addIdField.getText().length() == Book.BOOD_ID_LENGTH &&
                     !addNameField.getText().isEmpty() &&
-                    !addPriceField.getText().isEmpty() &&
-                    !addNameField.getText().isEmpty()){
+                    convertToFloat(addPriceField.getText())&&
+                    convertToInteger(addNumField.getText())){
                 String id = addIdField.getText();
                 String name = addNameField.getText();
                 float price = Float.parseFloat(addPriceField.getText());
@@ -92,4 +93,24 @@ import javafx.stage.Stage;
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
+     public boolean convertToFloat(String f){
+         try {
+             Float.parseFloat(f);
+             return true;
+         }catch (NumberFormatException e){
+             System.out.println("WRONG PRICE FORMAT");
+             return false;
+         }
+     }
+
+     public boolean convertToInteger(String i){
+         try {
+             Integer.parseInt(i);
+             return true;
+         }catch (NumberFormatException e){
+             System.out.println("WRONG NUM FORMAT");
+             return false;
+         }
+     }
 }

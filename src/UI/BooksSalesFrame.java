@@ -41,8 +41,12 @@ public class BooksSalesFrame extends Application{
         inventoryBtn.setFont(new Font(15));
         figureBtn.setFont(new Font(15));
         saveBtn.setFont(new Font(15));
-        inventoryBtn.setOnAction(event -> new BookFrame().start(new Stage()));
+        inventoryBtn.setOnAction(event -> {
+            new BookFrame().start(new Stage());
+            primaryStage.close();
+        });
 //        figureBtn.setOnAction(event -> );
+
         saveBtn.setOnAction(event -> primaryStage.close());
 
         FlowPane menuPane = new FlowPane();
@@ -118,7 +122,7 @@ public class BooksSalesFrame extends Application{
 
         submitBtn.setOnAction(event -> {
             if((id.getText().length() == Book.BOOD_ID_LENGTH) &&
-                    !(num.getText().isEmpty()) &&
+                    convertToInteger(num.getText())&&
                     (seller.getText().length() <= Book.SELLER_LENGTH)){
                 if(!bookList.isEmpty()){
                     for (Book book : bookList){
@@ -146,5 +150,15 @@ public class BooksSalesFrame extends Application{
             id.clear();
             seller.clear();
         });
+    }
+
+    public boolean convertToInteger(String i){
+        try {
+            Integer.parseInt(i);
+            return true;
+        }catch (NumberFormatException e){
+            System.out.println("WRONG NUM FORMAT");
+            return false;
+        }
     }
 }

@@ -31,7 +31,6 @@ public class DBInit {
             statement.executeUpdate(sql2);
             statement.executeUpdate(sql3);
             statement.executeUpdate(sql4);
-            System.out.println("create database successfully.");
         } catch (SQLException se){
             se.printStackTrace();
         } catch (Exception e){
