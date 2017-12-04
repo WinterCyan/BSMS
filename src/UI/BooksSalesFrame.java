@@ -16,11 +16,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class BooksSalesFrame extends Application{
+    public static Label msgLabel = new Label();
     private SaleList saleList;
     private BookList bookList;
     private int INIT_ORD = 1;
@@ -46,11 +48,15 @@ public class BooksSalesFrame extends Application{
         saveBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
         inventoryBtn.setOnAction(event -> {
             new BookFrame().start(new Stage());
+            msgLabel.setVisible(false);
             primaryStage.close();
         });
 //        figureBtn.setOnAction(event -> );
 
-        saveBtn.setOnAction(event -> primaryStage.close());
+        saveBtn.setOnAction(event -> {
+            msgLabel.setVisible(false);
+            primaryStage.close();
+        });
 
         FlowPane menuPane = new FlowPane();
         menuPane.setPadding(new Insets(20,0,0,0));
@@ -123,8 +129,18 @@ public class BooksSalesFrame extends Application{
         salePane.add(submitBtn, 3,0);
         salePane.add(clearBtn, 3,2);
 
+        msgLabel.setPadding(new Insets(0,0,0,20));
+        msgLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 20));
+        msgLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        msgLabel.setTextFill(Color.SILVER);
+        msgLabel.setVisible(false);
+
+        HBox labelBox = new HBox();
+        labelBox.getChildren().add(msgLabel);
+        labelBox.setAlignment(Pos.CENTER);
+
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(menuPane, chartBox, salePane);
+        vBox.getChildren().addAll(menuPane, chartBox, salePane, labelBox);
         vBox.setBackground(bkg);
         Scene scene = new Scene(vBox,800,550);
         primaryStage.setScene(scene);
@@ -152,8 +168,14 @@ public class BooksSalesFrame extends Application{
                             }
                         }
                     }
-                }else System.out.println("NO BOOK");
-            }else System.out.println("WRONG INPUT");
+                }else{
+                    msgLabel.setVisible(true);
+                    msgLabel.setText("NOT FOUND");
+                }
+            }else {
+                msgLabel.setVisible(true);
+                msgLabel.setText("WRONG INPUT SYNTAX");
+            }
             // seller and num(mostly 1) stays:
             id.clear();
         });
@@ -170,7 +192,8 @@ public class BooksSalesFrame extends Application{
             Integer.parseInt(i);
             return true;
         }catch (NumberFormatException e){
-            System.out.println("WRONG NUM FORMAT");
+            msgLabel.setVisible(true);
+            msgLabel.setText("WRONG NUM FORMAT");
             return false;
         }
     }

@@ -1,5 +1,7 @@
 package BasicClass;
 
+import UI.BooksSalesFrame;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -114,14 +116,19 @@ public class BookList extends ArrayList<Book>{
             resultSet.next();
             int nowNum = resultSet.getInt("NUM");
             String sql = "UPDATE BOOKS SET NUM = NUM - " + saleNum + ";";
-            if(nowNum > saleNum) statement.execute(sql);
+            if(nowNum > saleNum){
+                BooksSalesFrame.msgLabel.setVisible(false);
+                statement.execute(sql);
+            }
             else if(nowNum == saleNum){
                 String soldOutSQL = "DELETE FROM BOOKS WHERE ID = " + bookId + ";";
                 statement.execute(soldOutSQL);
-                System.out.println("SOLD OUT JUST NOW");
+                BooksSalesFrame.msgLabel.setVisible(true);
+                BooksSalesFrame.msgLabel.setText("SOLD OUT JUST NOW");
             }
             else {
-                System.out.println("INVENTORY SHORTAGE");
+                BooksSalesFrame.msgLabel.setVisible(true);
+                BooksSalesFrame.msgLabel.setText("INVENTORY SHORTAGE");
                 return false;
             }
         } catch (SQLException se){

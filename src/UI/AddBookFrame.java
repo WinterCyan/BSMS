@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -17,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AddBookFrame extends Application{
+    public static Label msgLabel = new Label();
     private BookList bookList;
 
     @Override
@@ -59,9 +61,18 @@ public class AddBookFrame extends Application{
                 float price = Float.parseFloat(addPriceField.getText());
                 int num = Integer.parseInt(addNumField.getText());
 
-                if(bookList.addBook(id, name, price, num)) System.out.println("New books added.");
-                else System.out.println("Updated existed books.");
-            }else System.out.println("NO BLANK!");
+                if(bookList.addBook(id, name, price, num)){
+                    msgLabel.setVisible(true);
+                    msgLabel.setText("New books added.");
+                }
+                else{
+                    msgLabel.setVisible(true);
+                    msgLabel.setText("Updated existed books.");
+                }
+            }else{
+                msgLabel.setVisible(true);
+                msgLabel.setText("NO BLANK!");
+            }
 
             addIdField.clear();
             addNameField.clear();
@@ -76,6 +87,8 @@ public class AddBookFrame extends Application{
             addNameField.clear();
             addPriceField.clear();
             addNumField.clear();
+            msgLabel.setText(null);
+            msgLabel.setVisible(false);
 
             new BookFrame().start(new Stage());
             primaryStage.close();
@@ -99,13 +112,22 @@ public class AddBookFrame extends Application{
         hBox.setMargin(cancelBtn, new Insets(10,20,15,0));
         hBox.setMargin(addBtn, new Insets(10,0,15,20));
 
+        msgLabel.setPadding(new Insets(0,0,0,20));
+        msgLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 20));
+        msgLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        msgLabel.setTextFill(Color.SILVER);
+        msgLabel.setVisible(false);
+
+        HBox labelBox = new HBox();
+        labelBox.getChildren().add(msgLabel);
+        labelBox.setAlignment(Pos.CENTER);
 
         VBox vBox = new VBox();
         vBox.setBackground(bkg);
-        vBox.getChildren().addAll(gridPane, hBox);
+        vBox.getChildren().addAll(gridPane, hBox, labelBox);
         vBox.setMargin(gridPane, new Insets(20,0,0,0));
         vBox.setMargin(hBox, new Insets(20,0,0,0));
-        Scene scene = new Scene(vBox,400,250);
+        Scene scene = new Scene(vBox,400,300);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Add Books");
         primaryStage.setResizable(false);
@@ -117,7 +139,8 @@ public class AddBookFrame extends Application{
              Float.parseFloat(f);
              return true;
          }catch (NumberFormatException e){
-             System.out.println("WRONG PRICE FORMAT");
+             msgLabel.setVisible(true);
+             msgLabel.setText("WRONG PRICE FORMAT");
              return false;
          }
      }
@@ -127,7 +150,8 @@ public class AddBookFrame extends Application{
              Integer.parseInt(i);
              return true;
          }catch (NumberFormatException e){
-             System.out.println("WRONG NUM FORMAT");
+             msgLabel.setVisible(true);
+             msgLabel.setText("WRONG NUM FORMAT");
              return false;
          }
      }

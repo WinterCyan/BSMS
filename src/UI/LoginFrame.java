@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LoginFrame extends Application{
+    public static Label msgLabel = new Label();
 
     @Override
     public void start(Stage primaryStage){
@@ -49,7 +51,8 @@ public class LoginFrame extends Application{
                 primaryStage.close();
             }else {
                 pwdField.clear();
-                System.out.println("INVALID USER NAME OR PASSWORD");
+                msgLabel.setVisible(true);
+                msgLabel.setText("INVALID USER NAME OR PASSWORD");
             }
         });
 
@@ -65,6 +68,16 @@ public class LoginFrame extends Application{
         gridPane.add(pwdText, 0,1);
         gridPane.add(pwdField, 1,1);
 
+        msgLabel.setPadding(new Insets(0,0,0,20));
+        msgLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 20));
+        msgLabel.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        msgLabel.setTextFill(Color.SILVER);
+        msgLabel.setVisible(false);
+
+        HBox labelBox = new HBox();
+        labelBox.getChildren().add(msgLabel);
+        labelBox.setAlignment(Pos.CENTER);
+
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.BOTTOM_CENTER);
         hBox.getChildren().addAll(exitBtn, loginBtn);
@@ -74,7 +87,7 @@ public class LoginFrame extends Application{
 
         VBox vBox = new VBox();
         vBox.setBackground(bkg);
-        vBox.getChildren().addAll(gridPane, hBox);
+        vBox.getChildren().addAll(gridPane, hBox, labelBox);
         vBox.setMargin(gridPane, new Insets(70,0,0,0));
         vBox.setMargin(hBox, new Insets(20,0,0,0));
         Scene scene = new Scene(vBox,400,250);
