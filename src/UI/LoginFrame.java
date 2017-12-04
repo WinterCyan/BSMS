@@ -1,5 +1,7 @@
 package UI;
 
+import DB.DBInit;
+import DB.TableInit;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +28,7 @@ public class LoginFrame extends Application{
                 (image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
         Background bkg = new Background(backgroundImage);
 
-        Text sellerNameText = new Text("Seller Name: ");
+        Text sellerNameText = new Text("User Name: ");
         sellerNameText.setFill(Color.WHITE);
         sellerNameText.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField sellerNameField = new TextField();
@@ -37,9 +39,23 @@ public class LoginFrame extends Application{
 
         Button loginBtn = new Button("LOGIN");
         loginBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
+        loginBtn.setOnAction(event -> {
+            String usr = sellerNameField.getText();
+            String pwd = pwdField.getText();
+            if(usr.equals("root") && pwd.equals("winter")){
+                new DBInit();
+                new TableInit();
+                new BooksSalesFrame().start(new Stage());
+                primaryStage.close();
+            }else {
+                pwdField.clear();
+                System.out.println("INVALID USER NAME OR PASSWORD");
+            }
+        });
 
         Button exitBtn = new Button("EXIT");
         exitBtn.setFont(Font.font(null, FontWeight.BOLD, 15));
+        exitBtn.setOnAction(event -> primaryStage.close());
 
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);

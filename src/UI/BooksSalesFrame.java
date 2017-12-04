@@ -24,23 +24,19 @@ public class BooksSalesFrame extends Application{
     private SaleList saleList;
     private BookList bookList;
     private int INIT_ORD = 1;
-    private int ordNum = INIT_ORD;
     private ObservableList<SaleRecord> records;
 
     @Override
     public void start(Stage primaryStage){
+        saleList = new SaleList();
+        bookList = new BookList();
+
         Image image = new Image("cube.jpg");
         BackgroundSize size = new BackgroundSize
                 (BackgroundSize.AUTO,BackgroundSize.AUTO,false,false, true,true);
         BackgroundImage backgroundImage = new BackgroundImage
                 (image, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
         Background bkg = new Background(backgroundImage);
-
-        new DBInit();
-        new TableInit();
-
-        saleList = new SaleList();
-        bookList = new BookList();
 
         Button inventoryBtn = new Button("INVENTORY");
         Button figureBtn = new Button("FIGURE");
@@ -152,7 +148,7 @@ public class BooksSalesFrame extends Application{
                                 // submit to db:
                                 saleList.addSale(bookId, sellerName, saleNum);
                                 // submit to table:
-                                records.add(new SaleRecord(book, sale, ordNum++));
+                                records.add(new SaleRecord(book, sale, INIT_ORD++));
                             }
                         }
                     }
