@@ -23,15 +23,12 @@ public class OutputSales {
     private static DataOutputStream dos;
 
 //    public OutputSales() throws Exception{
-    public static void main(String[] args) throws Exception{
-        saleList = new SaleList();
-
-
+    public OutputSales() throws Exception{
         fos = new FileOutputStream("Sales.txt");
         bos = new BufferedOutputStream(fos);
         dos = new DataOutputStream(bos);
 
-        dos.writeBytes("Sale ID     Book ID     Seller      Number\n");
+        dos.writeBytes("Sale ID     Book ID         Book Name       Seller      Number\n");
 //        for(Sale sale : saleList){
 //            String saleId = sale.getSaleId();
 //            String bookId = sale.getBookId();
@@ -47,26 +44,27 @@ public class OutputSales {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
             statement = connection.createStatement();
-            String sql = "SELECT SALE_ID, BOOK_ID, BOOKS.NAME, SELLER, SALE_NUM, BOOKS.PRICE, " +
-                    "SALE_NUM*BOOK.PRICE AS TOTAL_PRICE FROM SALES" +
-                    "JOIN BOOKS ON SALES.BOOK_ID = BOOKS.ID";
-//            String sql = "SELECT SALE_ID, BOOK_ID, SELLER, SALE_NUM FROM SALES";
+            String sql = "SELECT SALES.SALE_ID, SALES.BOOK_ID, BOOKS.NAME AS BOOK_NAME, SALES.SELLER, SALES.SALE_NUM, BOOKS.PRICE, " +
+                    "FORMAT(SALES.SALE_NUM*BOOKS.PRICE, 2) AS TOTAL_PRICE FROM SALES " +
+                    "JOIN BOOKS ON SALES.BOOK_ID = BOOKS.ID;";
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()){
-                String saleId = resultSet.getString("SALE_ID");
-                String bookId = resultSet.getString("BOOK_ID");
-                String seller = resultSet.getString("SELLER");
-                int saleNum = resultSet.getInt("SALE_NUM");
-                float bookPrice = resultSet.getFloat("BOOKS.PRICE");
-                float totalPrice = resultSet.getFloat("TOTAL_PRICE");
-//                Sale sale = new Sale(bookId, seller, saleNum);
-//                this.add(sale);
-                dos.writeBytes(saleId + "   " + bookId + "     " + seller  + "     "
+                String saleId = resultSet.getString("SALES.SALE_ID");
+                String bookId = resultSet.getString("SALES.BOOK_ID");
+                String bookName = resultSet.getString("BOOK_NAME");
+                String seller = resultSet.getString("SALES.SELLER");
+                int saleNum = resultSet.getInt("SALES.SALE_NUM");
+                String bookPrice = resultSet.getString("BOOKS.PRICE");
+                String  totalPrice = resultSet.getString("TOTAL_PRICE");
+                dos.writeBytes(saleId + "   " + bookId + "     " + bookName + "     " + seller  + "     "
                         + String.valueOf(saleNum) + "      " + String.valueOf(bookPrice)
                         + "    " + String.valueOf(totalPrice) + "\n");
-//                System.out.println(saleId + bookId + seller + saleNum + "\n");
             }
             resultSet.close();
+            dos.close();
+            bos.close();
+            fos.close();
+            System.out.println("Output success.");
         } catch (SQLException se){
             se.printStackTrace();
         } catch (Exception e){

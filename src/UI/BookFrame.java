@@ -1,6 +1,8 @@
 package UI;
 
 import BasicClass.BookInventory;
+import Text.OutputBooks;
+import Text.OutputSales;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,6 +68,30 @@ public class BookFrame extends Application{
             primaryStage.close();
         });
 
+        Button bookBtn = new Button("Print Books");
+        bookBtn.setOnAction(event -> {
+            try{
+                new OutputBooks();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
+        Button saleBtn = new Button("Print Sales");
+        saleBtn.setOnAction(event -> {
+            try{
+                new OutputSales();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
+        HBox hBoxTop = new HBox();
+        hBoxTop.getChildren().addAll(bookBtn, saleBtn);
+        hBoxTop.setAlignment(Pos.CENTER);
+        hBoxTop.setMargin(bookBtn, new Insets(10,10,10,30));
+        hBoxTop.setMargin(saleBtn, new Insets(10,10,10,30));
+
         HBox hBox = new HBox();
         hBox.getChildren().addAll(addBtn, okBtn);
         hBox.setAlignment(Pos.CENTER);
@@ -75,7 +101,7 @@ public class BookFrame extends Application{
 
         VBox vBox = new VBox();
         vBox.setBackground(bkg);
-        vBox.getChildren().addAll(table, hBox);
+        vBox.getChildren().addAll(hBoxTop, table, hBox);
         vBox.setMargin(table, new Insets(10,15,5,15));
 
         Scene scene = new Scene(vBox, 800,450);

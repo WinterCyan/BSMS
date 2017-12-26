@@ -25,11 +25,11 @@ public class OutputBooks {
             String bookId = book.getBookId();
             String bookName = book.getBookName();
             float bookPrice = book.getBookPrice();
-            System.out.println(bookId + bookName + String.valueOf(bookPrice));
             dos.writeBytes(bookId + "   " + bookName + "    " + String.valueOf(bookPrice) + "\n");
-            System.out.println("Outputting...");
         }
         dos.close();
-        System.out.println("Output succeed.");
+        bos.close();
+        fos.close();
+        System.out.println("Output success.");
     }
 }
