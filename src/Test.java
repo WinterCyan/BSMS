@@ -1,81 +1,51 @@
-import BasicClass.Sale;
-import BasicClass.SaleList;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.stage.Stage;
 
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.sql.*;
+import java.util.Arrays;
 
-public class Test {
-    private static SaleList saleList;
-    private static FileOutputStream fos;
-    private static BufferedOutputStream bos;
-    private static DataOutputStream dos;
+public class Test extends Application{
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList("Speed", "User rating", "Milage", "Safety")));
+        xAxis.setLabel("category");
 
-    private static Connection connection;
-    private static Statement statement;
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Score");
 
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost/BOOKSTORE?useSSL=true";
-    private static final String USER = "root";
-    private static final String PASS = "winter";
-    public static void main(String[] args) throws Exception{
-        fos = new FileOutputStream("Sales.txt");
-        bos = new BufferedOutputStream(fos);
-        dos = new DataOutputStream(bos);
+        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle("Comparison");
 
-        dos.writeBytes("Sale ID     Book ID     Book Name       Seller      Number\n");
-//        for(Sale sale : saleList){
-//            String saleId = sale.getSaleId();
-//            String bookId = sale.getBookId();
-//            String seller = sale.getSeller();
-//            int saleNum = sale.getSaleNum();
-//            dos.writeBytes(saleId + "   " + bookId + "     " + seller  + "     " + String.valueOf(saleNum) + "\n");
-//            System.out.println("Outputting...");
-//        }
-//        dos.close();
-//        System.out.println("Output succeed.");
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("Fiat");
+        series1.getData().add(new XYChart.Data<>("Speed", 1.0));
+        series1.getData().add(new XYChart.Data<>("User rating", 3.0));
+        series1.getData().add(new XYChart.Data<>("Milage", 5.0));
+        series1.getData().add(new XYChart.Data<>("Safety", 5.0));
 
-        try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            statement = connection.createStatement();
-            String sql = "SELECT SALES.SALE_ID, SALES.BOOK_ID, BOOKS.NAME AS BOOK_NAME, SALES.SELLER, SALES.SALE_NUM, BOOKS.PRICE, " +
-                    "FORMAT(SALES.SALE_NUM*BOOKS.PRICE, 2) AS TOTAL_PRICE FROM SALES " +
-                    "JOIN BOOKS ON SALES.BOOK_ID = BOOKS.ID;";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next()){
-                String saleId = resultSet.getString("SALES.SALE_ID");
-                String bookId = resultSet.getString("SALES.BOOK_ID");
-                String bookName = resultSet.getString("BOOK_NAME");
-                String seller = resultSet.getString("SALES.SELLER");
-                int saleNum = resultSet.getInt("SALES.SALE_NUM");
-                String bookPrice = resultSet.getString("BOOKS.PRICE");
-                String  totalPrice = resultSet.getString("TOTAL_PRICE");
-                dos.writeBytes(saleId + "   " + bookId + "     " + bookName + "     " + seller  + "     "
-                        + String.valueOf(saleNum) + "      " + String.valueOf(bookPrice)
-                        + "    " + String.valueOf(totalPrice) + "\n");
-                System.out.println("Done.");
-            }
-            resultSet.close();
-            dos.close();
-            bos.close();
-            fos.close();
-        } catch (SQLException se){
-            se.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if(statement != null) statement.close();
-            }catch (SQLException se){
-                se.printStackTrace();
-            }
-            try{
-                if(connection != null) connection.close();
-            }catch (SQLException se){
-                se.printStackTrace();
-            }
-        }
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series2.setName("Audi");
+        series2.getData().add(new XYChart.Data<>("Speed", 5.0));
+        series2.getData().add(new XYChart.Data<>("User rating", 6.0));
+        series2.getData().add(new XYChart.Data<>("Milage", 10.0));
+        series2.getData().add(new XYChart.Data<>("Safety", 4.0));
+
+        barChart.getData().addAll(series1, series2);
+        Group root = new Group(barChart);
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setTitle("Bar Chart");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args){
+        launch(args);
     }
 }

@@ -1,6 +1,2 @@
 Book ID     Name    Price
-000000   WE    12.36
-000001   Winte Is Coming    45.7
-002222   Yeah    23.5
-111111   winter    25.0
-121212   C Programming    79.5
+000001   an    12.3

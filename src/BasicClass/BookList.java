@@ -28,7 +28,8 @@ public class BookList extends ArrayList<Book>{
                 String bookName = resultSet.getString("NAME");
                 float price = resultSet.getFloat("PRICE");
                 int bookNum = resultSet.getInt("NUM");
-                Book book = new Book(bookId, bookName, price, bookNum);
+                int sale = resultSet.getInt("SALE");
+                Book book = new Book(bookId, bookName, price, bookNum, sale);
                 this.add(book);
 //                System.out.println(bookId + bookName + price +"\n");
             }
@@ -72,7 +73,8 @@ public class BookList extends ArrayList<Book>{
             String sql = "INSERT INTO BOOKS VALUES( '" + bookId + "'," +
                     "'" + bookName + "'," +
                     "'" + bookPrice + "'," +
-                    newNum + ");";
+                    newNum +
+                    ", 0);";
             statement.execute(sql);
             return true;
         } catch (SQLException se){
@@ -98,7 +100,7 @@ public class BookList extends ArrayList<Book>{
                 book.setBookNum(book.getBookNum() + newNum);
                 return false;
             }
-        Book book = new Book(bookId, bookName, bookPrice, newNum);
+        Book book = new Book(bookId, bookName, bookPrice, newNum, 0);
         this.add(book);
         return true;
     }
@@ -116,9 +118,14 @@ public class BookList extends ArrayList<Book>{
             resultSet.next();
             int nowNum = resultSet.getInt("NUM");
             String sql = "UPDATE BOOKS SET NUM = NUM - " + saleNum + ";";
+            String sql2 = "UPDATE BOOKS SET SALE = " +
+                    "SALE + " + saleNum + " " +
+                    "WHERE ID = '" + bookId + "';";
+            statement.execute(sql2);
             if(nowNum > saleNum){
                 BooksSalesFrame.msgLabel.setVisible(false);
                 statement.execute(sql);
+                statement.execute(sql2);
             }
             else if(nowNum == saleNum){
                 String soldOutSQL = "DELETE FROM BOOKS WHERE ID = " + bookId + ";";
@@ -153,6 +160,7 @@ public class BookList extends ArrayList<Book>{
             if(book.getBookId().equals(bookId)){
                 if(bookPrice != -1) book.setBookPrice(bookPrice); // change price when the bookPrice is not -1
                 book.setBookNum(book.getBookNum() - saleNum);
+                book.setSale(book.getSale() + saleNum);
             }
             return true;
         }

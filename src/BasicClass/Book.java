@@ -8,12 +8,22 @@ public class Book {
     private String bookId;
     private float bookPrice;
     private int bookNum;
+    private int sale;
 
-    public Book(String bookId, String bookName, float bookPrice, int bookNum){
+    public Book(String bookId, String bookName, float bookPrice, int bookNum, int sale){
         this.bookId = bookId;
         this.bookName = bookName;
         this.bookPrice = bookPrice;
         this.bookNum = bookNum;
+        this.sale = sale;
+    }
+
+    public void setSale(int sale) {
+        this.sale = sale;
+    }
+
+    public int getSale() {
+        return sale;
     }
 
     public String getBookName() {

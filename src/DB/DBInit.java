@@ -21,7 +21,8 @@ public class DBInit {
                     "ID CHAR(6) NOT NULL PRIMARY KEY," +
                     "NAME CHAR(50) NOT NULL," +
                     "PRICE FLOAT NOT NULL," +
-                    "NUM INT NOT NULL DEFAULT '100');";
+                    "NUM INT NOT NULL DEFAULT '100'," +
+                    "SALE INT NOT NULL DEFAULT '0');";
             String  sql4 = "CREATE TABLE IF NOT EXISTS SALES(" +
                     "SALE_ID CHAR(6) NOT NULL PRIMARY KEY," +
                     "BOOK_ID CHAR(6) NOT NULL," +
