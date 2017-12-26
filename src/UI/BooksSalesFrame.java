@@ -51,7 +51,13 @@ public class BooksSalesFrame extends Application{
             msgLabel.setVisible(false);
             primaryStage.close();
         });
-//        figureBtn.setOnAction(event -> );
+        figureBtn.setOnAction(event -> {
+            try{
+                new ChartFrame().start(new Stage());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
 
         saveBtn.setOnAction(event -> {
             msgLabel.setVisible(false);

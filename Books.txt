@@ -1,2 +1,4 @@
 Book ID     Name    Price
 000001   an    12.3
+000002   Viva    36.1
+000003   OPP    45.0

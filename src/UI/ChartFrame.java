@@ -44,13 +44,9 @@ public class ChartFrame extends Application{
 
         saleChart.getData().add(series);
         Group root = new Group(saleChart);
-        Scene scene = new Scene(root, 600,400);
+        Scene scene = new Scene(root, 550,400);
         primaryStage.setTitle("Sale Chart");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args){
-        launch(args);
     }
 }
