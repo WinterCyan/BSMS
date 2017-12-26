@@ -1,5 +1,7 @@
 package BasicClass;
 
+import DB.DBInfo;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -7,10 +9,10 @@ public class SaleList extends ArrayList<Sale>{
     private Connection connection;
     private Statement statement;
 
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost/BOOKSTORE?useSSL=true";
-    private static final String USER = "root";
-    private static final String PASS = "winter";
+    private static final String JDBC_DRIVER = DBInfo.JDBC_DRIVER;
+    private static final String DB_URL = DBInfo.DB_URL;
+    private static final String USER = DBInfo.USER;
+    private static final String PASS = DBInfo.PASS;
 
     public SaleList(){
         connection = null;

@@ -3,10 +3,10 @@ package DB;
 import java.sql.*;
 
 public class DBInit {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/?useSSL=true";
-    static final String USER = "root";
-    static final String PASS = "winter";
+    private static final String JDBC_DRIVER = DBInfo.JDBC_DRIVER;
+    private static final String DB_URL = DBInfo.DB_URL_CREATE;
+    private static final String USER = DBInfo.USER;
+    private static final String PASS = DBInfo.PASS;
 
     public DBInit(){
         Connection connection = null;

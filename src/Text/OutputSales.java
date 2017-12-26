@@ -1,6 +1,7 @@
 package Text;
 
 import BasicClass.SaleList;
+import DB.DBInfo;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
@@ -13,11 +14,11 @@ public class OutputSales {
     private static Connection connection;
     private static Statement statement;
 
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost/BOOKSTORE?useSSL=true";
-    private static final String USER = "root";
-    private static final String PASS = "winter";
-    private static SaleList saleList;
+    private static final String JDBC_DRIVER = DBInfo.JDBC_DRIVER;
+    private static final String DB_URL = DBInfo.DB_URL;
+    private static final String USER = DBInfo.USER;
+    private static final String PASS = DBInfo.PASS;
+
     private static FileOutputStream fos;
     private static BufferedOutputStream bos;
     private static DataOutputStream dos;
