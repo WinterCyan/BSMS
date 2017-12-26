@@ -34,10 +34,12 @@ public class LoginFrame extends Application{
         sellerNameText.setFill(Color.WHITE);
         sellerNameText.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField sellerNameField = new TextField();
+        sellerNameField.setPromptText("root");
         Text pwdText= new Text("Password: ");
         pwdText.setFill(Color.WHITE);
         pwdText.setFont(Font.font(null, FontWeight.BOLD,15));
         PasswordField pwdField = new PasswordField();
+        pwdField.setPromptText("winter");
 
         Button loginBtn = new Button("LOGIN");
         loginBtn.setFont(Font.font(null, FontWeight.BOLD, 15));

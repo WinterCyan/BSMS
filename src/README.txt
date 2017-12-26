@@ -1,1 +1,0 @@
-set book name as blank and price is -1 when you update the existed books;

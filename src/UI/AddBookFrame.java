@@ -38,10 +38,12 @@ public class AddBookFrame extends Application{
         addName.setFill(Color.WHITE);
         addName.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField addNameField = new TextField();
+        addNameField.setPromptText("\" \" for existed books");
         Text addPrice = new Text("Book Price: ");
         addPrice.setFill(Color.WHITE);
         addPrice.setFont(Font.font(null, FontWeight.BOLD,15));
         TextField addPriceField = new TextField();
+        addPriceField.setPromptText("\"-1\" for existed books");
         Text addNum = new Text("Number: ");
         addNum.setFill(Color.WHITE);
         addNum.setFont(Font.font(null, FontWeight.BOLD,15));

@@ -1,0 +1,30 @@
+作业项目名称：BSMS
+Github地址：https://github.com/WinterCyan/BSMS.git
+实现基础：
+    数据部分用MySQL数据库实现，UI实现用的是JavaFX。
+
+登录用户名：root
+登录密码：winter
+（可以在/BSMS/src/DB/DBInfo.java中更改有关连接MySQL的内容。）
+
+文件说明：
+    /BSMS/src/BasicClass/Book.java : 书籍类
+    /BSMS/src/BasicClass/BookInventory.java : 库存类
+    /BSMS/src/BasicClass/BookList.java : 书籍列表类，用于连接数据库与用户界面
+    /BSMS/src/BasicClass/Sale.java : 销售类
+    /BSMS/src/BasicClass/SaleList.java : 销售记录类1，用于连接数据库与用户界面
+    /BSMS/src/BasicClass/SaleRecord.java : 销售记录类2，用于为销售界面的销售记录提供数据
+    /BSMS/src/DB/DBInfo.java : JDBC 连接 MySQL 的基本信息：用户名，密码，数据库名等
+    /BSMS/src/DB/DBInit.java : 创建数据库
+    /BSMS/src/DB/TableInit.java : 创建表
+    /BSMS/src/Text/OutputBooks.java : 用于生成Books.txt的类
+    /BSMS/src/Text/OutputSales.java : 用于生成Sales.txt的类
+    /BSMS/src/UI/AddBookFrame.java : 添加新图书的窗口类 (添加已存在的书籍，可将图书名设为空格，价格设置为-1)
+    /BSMS/src/UI/BookFrame.java : 查看图书库存的窗口类
+    /BSMS/src/UI/BooksSalesFrame.java : 主销售界面类
+    /BSMS/src/UI/ChartFrame.java : 销售统计条形图界面类
+    /BSMS/src/UI/LoginFrame.java : 登陆界面类
+    /BSMS/src/cube.jpg : 背景图片
+    /BSMS/src/TestProg.java : 主程序类
+    /BSMS/Books.txt : 输出的图书信息文件
+    /BSMS/Sales.txt : 输出的销售记录文件
